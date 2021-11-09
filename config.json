@@ -1,0 +1,16 @@
+{
+  "port": 3000,
+  "session": { 
+    "secret": "secret",
+    "resave": true,
+    "saveUninitialized": true,
+    "proxy": true
+  },
+  "db": "4413/pkg/sqlite/Models_R_US.db",
+  "sequelize": {
+    "define": {
+      "freezeTableName": true,
+      "timestamps": false
+    }
+  }
+}
