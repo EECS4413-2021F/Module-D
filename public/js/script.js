@@ -115,6 +115,40 @@
         changeView(`#/taxes/${code}`, `Taxes in ${tax.province}`, supplant(templates['tax-page'], tax));
       });
     },
+    calculator() {
+      doAjax(GetTaxesAPI).then((taxes) => {
+        const provinces = taxes.map(t => supplant(templates['province-dropdown-item'], t)).join('');
+        const html = supplant(templates['calculator-page'], { provinces });
+
+        function changeProvince() {
+          const code = document.getElementById('province').value;
+          const province = taxes.find(t => t.code === code);
+          if (!province) return;
+
+          document.getElementById('type').value = province.type;
+          document.getElementById('gst').value = '' + province.GST.toFixed(2) + '%';
+          document.getElementById('pst').value = '' + province.PST.toFixed(2) + '%';
+          updateTotals();
+        }
+
+        function updateTotals() {
+          if (!document.getElementById('province').value) return;
+
+          const toPercent = (v) => (v.endsWith('%') ? v.substr(0, v.length - 1) : v) / 100;
+          const amount = +(document.getElementById('amount').value);
+          const gst    = toPercent(document.getElementById('gst').value);
+          const pst    = toPercent(document.getElementById('pst').value);
+
+          document.getElementById('taxes').value = (amount * (gst + pst)).toFixed(2);
+          document.getElementById('total').value = (amount * (gst + pst + 1)).toFixed(2);
+        }
+
+        changeView('#/calculator', 'Calculator', html);
+        document.getElementById('province').addEventListener('change', changeProvince);
+        document.getElementById('amount').addEventListener('change', updateTotals);
+        document.getElementById('amount').addEventListener('keyup', updateTotals);
+      });
+    },
     index() {
       routes.provinces(true);
     }
