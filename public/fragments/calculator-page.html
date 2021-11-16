@@ -1,0 +1,75 @@
+<div class="container">
+  <div class="card">
+    <div class="card-header text-dark bg-warning">Calculator</div>
+    <div class="card-body">
+      <div class="container">
+        <div class="row align-items-start">
+          <div class="col">
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="province-label">Province</span>
+              <select id="province" class="form-select" aria-label="Province">
+                <option value="" selected>Select A Province...</option>
+                {{ provinces }}
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row align-items-start">
+          <div class="col">
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="amount-label">$</span>
+              <input id="amount"
+                    type="text" class="form-control" placeholder="Amount"
+                    aria-label="Amount"
+                    aria-describedby="amount-label">
+            </div>
+          </div>
+        </div>
+        <div class="row align-items-start">
+          <div class="col">
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="tax-type-label">Tax Type</span>
+              <input id="type" type="text" value="Tax Type"
+                     class="form-control" 
+                     aria-label="Tax Type" readonly>
+            </div>
+          </div>
+          <div class="col">
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="gst-label">GST</span>
+              <input id="gst" type="text" value="0%"
+                     class="form-control"
+                     aria-label="GST" readonly>
+            </div>
+          </div>
+          <div class="col">
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="pst-label">PST</span>
+              <input id="pst" type="text" value="0%"
+                     class="form-control"
+                     aria-label="PST" readonly>
+            </div>
+          </div>
+        </div>
+        <div class="row align-items-start">
+          <div class="col">
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="taxes-label">Taxes $</span>
+              <input id="taxes" type="text" value="0.00"
+                     class="form-control"
+                     aria-label="Taxes" readonly>
+            </div>
+          </div>
+          <div class="col">
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="total-label">Total $</span>
+              <input id="total" type="text" value="0.00"
+                     class="form-control"
+                     aria-label="Total" readonly>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
