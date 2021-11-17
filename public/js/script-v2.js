@@ -61,6 +61,15 @@
 
   const ajaxRequests = {};
 
+  /**
+   * Retrieve the specified template from the server or the
+   * cached copy from localStorage. Populate the variables within
+   * the template with the object given.
+   * 
+   * @param {string} name 
+   * @param {object} object 
+   * @returns {Promise}
+   */
   function template(name, object) {
     return new Promise((resolve, reject) => {
       if (localStorage.getItem(name)) {
