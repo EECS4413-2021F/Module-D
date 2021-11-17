@@ -9,7 +9,7 @@
    * This is useful for automatically fixing URLs or for templating HTML.
    * Based on: http://www.crockford.com/javascript/remedial.html
    *
-   * @param {string} str 
+   * @param {string} str
    * @param {object} object
    * @returns {string}
    */
@@ -25,14 +25,14 @@
 
   /**
    * Make an AJAX request with XHR. Returns a Promise.
-   * 
-   * @param {string} url 
-   * @param {'GET'|'POST'|'PUT'|'HEAD'|'DELETE'} method 
+   *
+   * @param {string} url
+   * @param {'GET'|'POST'|'PUT'|'HEAD'|'DELETE'} method
    * @param {*} data
    * @returns {Promise}
    */
   function doAjax(url, method, data) {
-    const request = new XMLHttpRequest();                    // create the XHR request    
+    const request = new XMLHttpRequest();                    // create the XHR request
     return new Promise(function (resolve, reject) {          // return it as a Promise
       request.onreadystatechange = function () {             // setup our listener to process compeleted requests
         if (request.readyState !== 4) return;                // only run if the request is complete
@@ -67,7 +67,7 @@
         resolve(supplant(localStorage.getItem(name), object));
       } else {
         if (!ajaxRequests[name]) {
-          ajaxRequests[name] = doAjax(`fragments/${name}.html`);  
+          ajaxRequests[name] = doAjax(`fragments/${name}.html`);
         }
         ajaxRequests[name].catch(reject).then((html) => {
           localStorage.setItem(name, html);
@@ -81,7 +81,7 @@
    * Invoke the route associated with the given URL hash. If no route matches,
    * redirects to the default route.
    *
-   * @param {string} hash 
+   * @param {string} hash
    */
   function invokeRoute(hash) {
     if (hash.startsWith('#/')) {
@@ -101,9 +101,9 @@
    * #page element, and then updates the history, either by pushing a new state
    * or replacing the existing state if this is a redirection.
    *
-   * @param {string} url 
-   * @param {string} title 
-   * @param {string} html 
+   * @param {string} url
+   * @param {string} title
+   * @param {string} html
    * @param {boolean} isRedirect
    */
   function changeView(url, title, html, isRedirect = false) {
@@ -173,6 +173,68 @@
       routes.provinces(true);
     }
   };
+
+  /**
+   * Alternative Implementation:
+   *
+   * const routes = {
+   *   provinces(isRedirect) {
+   *     doAjax(GetTaxesAPI).then((taxes) => {
+   *       Promise.all(taxes.map((t) => template('province-item', t))).then((content) => {
+   *         template('provinces-page', { content: content.join('') }).then((html) => {
+   *           changeView('#/provinces', 'Provinces', html, isRedirect);
+   *         });
+   *       });
+   *     });
+   *   },
+   *   taxes(code) {
+   *     doAjax(GetTaxByCodeAPI.replace(':code', code)).then((tax) => {
+   *       template('tax-page', tax).then((html) => {
+   *         changeView(`#/taxes/${code}`, `Taxes in ${tax.province}`, html);
+   *       });
+   *     });
+   *   },
+   *   calculator() {
+   *     doAjax(GetTaxesAPI).then((taxes) => {
+   *       Promise.all(taxes.map(t => template('province-dropdown-item', t))).then((provinces) => {
+   *         template('calculator-page', { provinces: provinces.join('') }).then((html) => {
+   *
+   *           function changeProvince() {
+   *             const code = document.getElementById('province').value;
+   *             const province = taxes.find(t => t.code === code);
+   *             if (!province) return;
+   *
+   *             document.getElementById('type').value = province.type;
+   *             document.getElementById('gst').value = '' + province.GST.toFixed(2) + '%';
+   *             document.getElementById('pst').value = '' + province.PST.toFixed(2) + '%';
+   *             updateTotals();
+   *           }
+   *
+   *           function updateTotals() {
+   *             if (!document.getElementById('province').value) return;
+   *
+   *             const toPercent = (v) => (v.endsWith('%') ? v.substr(0, v.length - 1) : v) / 100;
+   *             const amount = +(document.getElementById('amount').value);
+   *             const gst    = toPercent(document.getElementById('gst').value);
+   *             const pst    = toPercent(document.getElementById('pst').value);
+   *
+   *             document.getElementById('taxes').value = (amount * (gst + pst)).toFixed(2);
+   *             document.getElementById('total').value = (amount * (gst + pst + 1)).toFixed(2);
+   *           }
+   *
+   *           changeView('#/calculator', 'Calculator', html);
+   *           document.getElementById('province').addEventListener('change', changeProvince);
+   *           document.getElementById('amount').addEventListener('change', updateTotals);
+   *           document.getElementById('amount').addEventListener('keyup', updateTotals);
+   *         });
+   *       });
+   *     });
+   *   },
+   *   index() {
+   *     routes.provinces(true);
+   *   }
+   * };
+   */
 
   document.querySelectorAll('script[type="text/x-template"]').forEach((el) => localStorage.setItem(el.id, el.innerText));
   window.addEventListener('hashchange', () => invokeRoute(window.location.hash));
