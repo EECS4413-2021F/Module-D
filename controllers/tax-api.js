@@ -1,6 +1,6 @@
 /** @typedef {import('express').RequestHandler} RequestHandler */
 
-const { Tax } = require('../models/orm-model.js');
+const { Tax } = require('../models/tax-orm.js');
 
 module.exports = {
 
