@@ -1,6 +1,7 @@
 /** @typedef {import('express').RequestHandler} RequestHandler */
 
 const { Tax } = require('../models/tax-orm.js');
+// const dao  = require('../models/tax-dao.js');
 
 module.exports = {
 
@@ -11,6 +12,7 @@ module.exports = {
    * @type {RequestHandler}
    */
   getTaxes(req, res) {
+    // dao.getTaxes((taxes) => {
     Tax.findAll().then((taxes) => {
       res.setHeader('Content-Type', 'application/json');
       res.write(JSON.stringify(taxes));
@@ -28,6 +30,7 @@ module.exports = {
    */
   getTaxByCode(req, res) {
     const where = { code: req.params.code };
+    // dao.getTaxByCode(req.params.code, (tax) => {
     Tax.findOne({ where }).then((tax) => {
       let response = tax || new Error('Tax code not found');
       res.setHeader('Content-Type', 'application/json');
