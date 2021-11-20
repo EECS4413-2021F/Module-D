@@ -2,6 +2,8 @@
   "name": "eecs4413-module-d",
   "version": "1.0.0",
   "author": {"name": "Vincent Chu"},
+  "main": "index.js",
+  "repository": {"type": "git", "url": "git+https://github.com/EECS4413-2021F/Module-D.git"},
   "dependencies": {
     "@types/body-parser": "^1.19.1",
     "@types/express": "^4.17.13",
