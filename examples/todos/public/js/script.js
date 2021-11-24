@@ -97,14 +97,13 @@
     }
   }
 
-  const GetTodosAPI    = '/todos';
-  const UpdateTodosAPI = '/todos';
+  const TodosAPI = '/todos';
 
   const templates = {};
   const routes = {
     async todos(isRedirect) {      
       try {
-        const todos   = await doAjax(GetTodosAPI);
+        const todos   = await doAjax(TodosAPI);
         const content = todos.map((t, i) => supplant(templates['todos-item'], { text: t, index: i })).join('');
         const html    = supplant(templates['todos-page'], { content });
 
@@ -112,7 +111,7 @@
         
         document.getElementById('add-todo').addEventListener('click', async () => {
           let text = document.forms['new-todo']['todo-text'].value; // document.getElementById('todo-text').value;
-          await doAjax(UpdateTodosAPI, 'POST', { text });
+          await doAjax(TodosAPI, 'POST', { text });
           routes.todos();
         });
 
@@ -121,7 +120,7 @@
             let index = btn.dataset.index; // btn-getAtttribute('data-index')
             const text = prompt(`Edit item ${index}`);
             if (text !== null) {
-              await doAjax(UpdateTodosAPI + '/' + index, 'PUT', { text });
+              await doAjax(TodosAPI + '/' + index, 'PUT', { text });
               routes.todos();
             }
           });
@@ -132,7 +131,7 @@
             let index = btn.dataset.index; // btn-getAtttribute('data-index')
             const doDelete = confirm(`Delete item ${index}`);
             if (doDelete) {
-              await doAjax(UpdateTodosAPI + '/' + index, 'DELETE');
+              await doAjax(TodosAPI + '/' + index, 'DELETE');
               routes.todos();
             }
           });
