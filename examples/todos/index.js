@@ -43,38 +43,38 @@ app.post('/todos', (req, res) => {
 });
 
 app.get('/todos/:id', (req, res) => {
-  const id = req.params.id;
+  const id = +req.params.id;
   req.session.todos = req.session.todos || [];
-  if (id < 0 || id >= req.session.todos.length) {
+  if (isNaN(id) || id < 0 || id >= req.session.todos.length) {
     res.status(404);
     res.end('NOT FOUND');
   } else {
     res.setHeader('Content-Type', 'application/json');
-    res.send(req.session.todos[req.params.id]);
+    res.send(req.session.todos[id]);
   }
 });
 
 app.put('/todos/:id', (req, res) => {
-  const id = req.params.id;
+  const id = +req.params.id;
   req.session.todos = req.session.todos || [];
-  if (id < 0 || id >= req.session.todos.length) {
+  if (isNaN(id) || id < 0 || id >= req.session.todos.length) {
     res.status(404);
     res.end('NOT FOUND');
   } else {
-    req.session.todos[req.params.id] = req.body.text;
+    req.session.todos[id] = req.body.text;
     res.setHeader('Content-Type', 'application/json');
     res.send(req.session.todos);
   }
 });
 
 app.delete('/todos/:id', (req, res) => {
-  const id = req.params.id;
+  const id = +req.params.id;
   req.session.todos = req.session.todos || [];
-  if (id < 0 || id >= req.session.todos.length) {
+  if (isNaN(id) || id < 0 || id >= req.session.todos.length) {
     res.status(404);
     res.end('NOT FOUND');
   } else {
-    req.session.todos.splice(req.params.id, 1);
+    req.session.todos.splice(id, 1);
     res.setHeader('Content-Type', 'application/json');
     res.send(req.session.todos);
   }
