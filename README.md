@@ -40,6 +40,8 @@ includes all the templates in the webpage, while the second version
 is just an application shell and the page templates are dynamically retrieved
 from the server via AJAX and stored within the [`fragments`](public/fragments) directory.
 
+![Provinces View](images/taxes.png)
+
 There are also two database model implementations, the
 [`models/tax-dao.js`](models/tax-dao.js) and
 [`models/tax-orm.js`](models/tax-orm.js). One implementation uses SQLite
