@@ -9,8 +9,7 @@ The overall structure of the project is as follows:
 │   ├── tax-dao.js
 │   └── tax-orm.js
 ├── public
-│   ├── css
-│   │   └── style.css
+│   ├── css (empty)
 │   ├── fragments
 │   │   ├── calculator-page.html
 │   │   ├── province-dropdown-item.html
