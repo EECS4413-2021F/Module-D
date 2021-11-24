@@ -50,3 +50,7 @@ uncomment the code in [`controllers/tax-api.js`](controllers/tax-api.js), lines
 [`3`](controllers/tax-api.js#L3), [`16`](controllers/tax-api.js#L16),
 [`32`](controllers/tax-api.js#L32) and [`34`](controllers/tax-api.js#L34). There are
 two APIs implemented: `/api/taxes` and `/api/taxes/:code`.
+
+## Other Examples
+
+- [Todos App](examples/todos)
