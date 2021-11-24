@@ -117,7 +117,7 @@
 
         document.querySelectorAll('.edit-btn').forEach((btn) => { // document.getElementsByClassName('edit-btn')
           btn.addEventListener('click', async () => {
-            let index = btn.dataset.index; // btn-getAtttribute('data-index')
+            let index = btn.dataset.index; // btn.getAtttribute('data-index')
             const text = prompt(`Edit item ${index}`);
             if (text !== null) {
               await doAjax(TodosAPI + '/' + index, 'PUT', { text });
@@ -128,7 +128,7 @@
 
         document.querySelectorAll('.delete-btn').forEach((btn) => { // document.getElementsByClassName('delete-btn')
           btn.addEventListener('click', async () => {
-            let index = btn.dataset.index; // btn-getAtttribute('data-index')
+            let index = btn.dataset.index; // btn.getAtttribute('data-index')
             const doDelete = confirm(`Delete item ${index}`);
             if (doDelete) {
               await doAjax(TodosAPI + '/' + index, 'DELETE');
